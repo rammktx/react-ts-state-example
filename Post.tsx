@@ -1,13 +1,24 @@
 import * as React from 'react';
 import './style.css';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Comment from './Comment';
 import Author from './Author';
 
 export default function Post(props) {
-  const [body, setBody] = useState('Check out this body property!');
+  let [body, setBody] = useState('props.post.body');
+
+  console.log('body:' + body);
+
+  const now = new Date().getTime();
+
+  const changeHandler = (event) => {
+    setBody(event.target.value);
+    console.log('after:' + body);
+  };
+
+  useEffect(() => console.log('useeffect'), [changeHandler]);
 
   return (
     <div className="center">
@@ -16,17 +27,13 @@ export default function Post(props) {
         <Author body={author} />
       ))}
       <p>{body}</p>
+      <p>{now}</p>
       <h3>Comments:</h3>
 
       {props.post.comments.map((comment) => (
         <Comment body={comment} />
       ))}
-      <input
-        type="text"
-        onChange={(e) => {
-          setBody(e.target.value);
-        }}
-      />
+      <input type="text" onInput={(event) => changeHandler(event)} />
     </div>
   );
 }

@@ -14,7 +14,5 @@ const post = {
   comments: ['First!', 'Great post', 'Hire this author now!']
 };
 root.render(
-  <StrictMode>
     <Post post={post} allAuthors={authors}/>
-  </StrictMode>
 );
